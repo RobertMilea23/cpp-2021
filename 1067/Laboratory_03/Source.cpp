@@ -54,13 +54,37 @@ int main() {
 	}
 
 	//adding new values to a static array /increase the size
-	noValues += 2;
-	array[5] = 10;
-	array[6] = 20;
+	//IT WILL NEVER WORK - draw the memory
+	//noValues += 2;
+	//array[5] = 10;
+	//array[6] = 20;
 
-	std::cout << std::endl << "The new size of the array is " << noValues;
-	std::cout << std::endl << "Array values are: ";
-	for (int i = 0; i < noValues; i++) {
-		std::cout << array[i] << " ";
+	//std::cout << std::endl << "The new size of the array is " << noValues;
+	//std::cout << std::endl << "Array values are: ";
+	//for (int i = 0; i < noValues; i++) {
+	//	std::cout << array[i] << " ";
+	//}
+
+	int values[1000];
+	int no = 0;
+	const int maxSize = 1000;
+
+	//add a new value into values
+	for (int i = 0; i < 5 && no < maxSize; i++) {
+		no += 1;
+		values[no - 1] = 10;
 	}
+
+
+	//dynamic arrays
+	int* dynamicValues = nullptr;
+	int noDynamicArrayValues = 0;
+
+	//dynamicValues = (int*)malloc(100 * sizeof(int));
+	noDynamicArrayValues = 10;
+	dynamicValues = new int[noDynamicArrayValues];
+
+
+
+
 }
