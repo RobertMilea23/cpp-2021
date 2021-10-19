@@ -26,9 +26,14 @@ void toUpperCase(char* text) {
 
 char* toUpperCaseWithReturn(const char text[]) {
 
-	char newText[1000];
+	//if (strlen(text) > 999) {
+	//	return nullptr;
+	//}
 
-	strcpy_s(newText, text);
+	//char newText[1000];
+	char* newText = new char[strlen(text) + 1];
+
+	strcpy_s(newText, strlen(text)+1, text);
 
 	for (int i = 0; i < strlen(newText); i++) {
 		if (newText[i] >= 'a' && newText[i] <= 'z') {
@@ -57,7 +62,8 @@ int main() {
 	printArray(values, noValues);
 
 	//toUpperCase(helloMsg);
-	char* upperHello = toUpperCaseWithReturn(helloMsg);
+	char* upperHello = nullptr;
+	upperHello = toUpperCaseWithReturn(helloMsg);
 
 	printMessage(helloMsg);
 	printMessage(upperHello);
