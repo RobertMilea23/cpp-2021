@@ -5,4 +5,4 @@ void printMessage(const char* message);
 
 void printArray(int values[], int noValues);
 
-int* createAndInitArray(int size, int defaultValue);
+int* createAndInitArray(int noElements, int defaultValue);

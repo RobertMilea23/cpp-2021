@@ -12,9 +12,10 @@ void printArray(int values[], int noValues) {
 	}
 }
 
-int* createAndInitArray(int size, int defaultValue) {
-	int* newArray = new int[size];
-	for (int i = 0; i < size; i++) {
+int* createAndInitArray(int noElements, int defaultValue) {
+
+	int* newArray = new int[noElements];
+	for (int i = 0; i < noElements; i++) {
 		newArray[i] = defaultValue;
 	}
 	return newArray;
