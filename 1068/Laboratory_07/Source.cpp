@@ -69,6 +69,58 @@ public:
 		}
 	}
 
+	void setName(string name) {
+		if (name.length() < 2) {
+			throw exception("Wrong name. Too short");
+		}
+		this->name = name;
+	}
+
+	void setPrice(float newPrice) {
+		if (newPrice <= 0) {
+			throw exception("Price value not ok");
+		}
+		this->price = newPrice;
+	}
+
+	void setDescription(const char* newDescription) {
+		if (strlen(newDescription) < 5) {
+			throw exception("Description too short");
+		}
+
+		//don't do this
+		//this->description = newDescription;
+
+		//here we are generating a memory leak
+		this->description = new char[strlen(newDescription) + 1];
+		strcpy_s(this->description, strlen(newDescription) + 1, newDescription);
+	}
+
+	void setStock(int newStock) {
+		if (newStock < 0) {
+			throw exception("Wrong value. Negative stock");
+		}
+		this->availableStock = newStock;
+		if (this->availableStock == 0) {
+			this->isAvailable = false;
+		}
+		else {
+			this->isAvailable = true;
+		}
+	}
+
+	void setDiscount(DiscountType discount) {
+		this->discount = discount;
+	}
+
+	void setPreviousMonthsValues(const int* backupData, int noValues) {
+		if (backupData == nullptr) {
+			throw exception("No input values");
+		}
+
+
+	}
+
 };
 
 class User {
