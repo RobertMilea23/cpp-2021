@@ -118,7 +118,50 @@ public:
 			throw exception("No input values");
 		}
 
+		//we generate another memory leak
+		this->monthlySoldItems = new int[noValues];
+		for (int i = 0; i < noValues; i++) {
+			this->monthlySoldItems[i] = backupData[i];
+		}
 
+		//don't forget
+		this->noMonths = noValues;
+	}
+
+public:
+	Product(string name, float price, int stock) {
+		this->setName(name);
+		this->setPrice(price);
+		this->setStock(stock);
+	}
+
+	Product(string name, const char* description, float price, int stock) {
+		this->setName(name);
+		this->setPrice(price);
+		this->setStock(stock);
+		this->setDescription(description);
+	}
+
+	Product(string name, const char* description, float price, int stock, DiscountType discount) {
+		this->setName(name);
+		this->setPrice(price);
+		this->setStock(stock);
+		this->setDescription(description);
+		this->setDiscount(discount);
+	}
+
+	Product(string name, const char* description, float price, int stock, 
+		DiscountType discount, const int* previousData, int noMonths) {
+		this->setName(name);
+		this->setPrice(price);
+		this->setStock(stock);
+		this->setDescription(description);
+		this->setDiscount(discount);
+		this->setPreviousMonthsValues(previousData, noMonths);
+	}
+
+	Product() {
+		this->name = "No product name";
 	}
 
 };
@@ -146,5 +189,28 @@ int main() {
 
 	product.printInfo();
 
-	Order oder;
+	product.setName("Laptop");
+	product.setDescription("Gaming laptop");
+	product.setPrice(3500);
+	product.setStock(15);
+	product.setDiscount(DiscountType::BLACK_FRIDAY);
+
+	product.printInfo();
+
+	Product laptop("Asus M300", 3500, 25);
+	laptop.printInfo();
+
+	Product gamingLaptop("Asus M500", "Gaming laptop with 16 GB RAM", 4200, 10);
+	gamingLaptop.printInfo();
+
+	Product blackFridayLaptop("Asus M500", "Gaming laptop with 16 GB RAM", 
+		4200, 10, DiscountType::BLACK_FRIDAY);
+	blackFridayLaptop.printInfo();
+
+	int previousData[] = { 6,10,20,12 };
+	int noValues = 4;
+
+	Product smartphone("X34", "The best smartphone", 2500, 16, DiscountType::MINIMUM, previousData, noValues);
+	smartphone.printInfo();
+
 }
