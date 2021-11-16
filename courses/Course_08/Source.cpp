@@ -149,6 +149,22 @@ public:
 		this->noGrades = object.noGrades;
 	}
 
+	//class copy constructor
+	//GradeBook(const GradeBook* object) : courseName(object->courseName) {
+
+	//	cout << endl << "Calling copy constructor";
+	//	//object.courseName = this->courseName;
+
+	//	//DON'T do the shallow copy
+	//	//this->grades = object.grades;
+
+	//	this->grades = new int[object->noGrades];
+	//	for (int i = 0; i < object->noGrades; i++) {
+	//		this->grades[i] = object->grades[i];
+	//	}
+	//	this->noGrades = object->noGrades;
+	//}
+
 };
 
 void doSomething(GradeBook gradeBook) {
