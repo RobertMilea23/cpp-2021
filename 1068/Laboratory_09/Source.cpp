@@ -73,12 +73,79 @@ public:
 public:
 	DeliveryVan(string driver, float vanVolume) : volume(vanVolume), driverName(driver) {
 		//this->driverName = driver;
+
+		DeliveryVan::NO_VANS += 1;
 	}
+
+	~DeliveryVan() {
+
+		cout << endl << "Calling the class destructor";
+
+		if (this->locations != nullptr) {
+			delete[] this->locations;
+		}
+		delete[] this->noBoxes;
+
+		DeliveryVan::NO_VANS -= 1;
+	}
+
+	//copy constructor
+	DeliveryVan(const DeliveryVan& van): volume(van.volume), driverName(van.driverName) {
+		//this->driverName = driverName;
+
+		cout << endl << "Calling the copy constructor";
+
+		this->locations = new string[van.noLocations];
+		this->noBoxes = new int[van.noLocations];
+		for (int i = 0; i < van.noLocations; i++) {
+			this->locations[i] = van.locations[i];
+			this->noBoxes[i] = van.noBoxes[i];
+		}
+		this->noLocations = van.noLocations;
+
+
+		DeliveryVan::NO_VANS += 1;
+	}
+
+	//operator =
+	void operator=(const DeliveryVan& van)   {
+		//you can't for constant attributes
+		//this->volume = van.volume;
+
+		if (this->locations == van.locations && this->noBoxes == van.noBoxes) {
+			//you get data from the same object
+			return;
+		}
+
+		this->driverName = van.driverName;
+
+		delete[] this->locations;
+		delete[] this->noBoxes;
+
+		this->locations = new string[van.noLocations];
+		this->noBoxes = new int[van.noLocations];
+		for (int i = 0; i < van.noLocations; i++) {
+			this->locations[i] = van.locations[i];
+			this->noBoxes[i] = van.noBoxes[i];
+		}
+		this->noLocations = van.noLocations;
+	}
+
 };
 
 const int DeliveryVan::MAX_NO_BOXES = 5;
 const int DeliveryVan::MIN_NAME_LENGTH = 3;
 int DeliveryVan::NO_VANS = 0;
+
+
+void printData(DeliveryVan van) {
+
+}
+
+DeliveryVan createDeliveryVan(string name, float volume) {
+	DeliveryVan newVan(name, volume);
+	return newVan;
+}
 
 int main() {
 	DeliveryVan van1("John", 1000);
@@ -89,4 +156,22 @@ int main() {
 	van1.addDelivery("Calea Dorobanti 15-17", 3);
 
 	van1.printJournal();
+
+	//create an object in HEAP
+	DeliveryVan* pointerToVan = new DeliveryVan("Vader", 500);
+	delete pointerToVan;
+
+	cout << endl << "After delete";
+
+	DeliveryVan van2("Bob", 500);
+	van2.addDelivery("Ploiesti", 3);
+
+	//test the copy constructor
+	DeliveryVan van1Copy = van1;
+	van1Copy.printJournal();
+
+	printData(van1);
+
+	van2 = van1;		//operator=(DeliveryVan, DeliveryVan)
+	van2 = van2;
 }
