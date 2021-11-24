@@ -71,8 +71,90 @@ public:
 		}
 		this->noGrades = object.noGrades;
 	}
+
+	//overloading operator = for the GradeBook class
+	void operator=( GradeBook source) {
+		this->courseName = source.courseName;
+		this->noGrades = source.noGrades;
+		//this->grades = source.grades;
+
+
+		if (this->grades == source.grades) {
+			//is the same object
+			return;
+		}
+		else {
+			delete[] this->grades;
+			this->grades = new int[this->noGrades];
+			for (int i = 0; i < this->noGrades; i++) {
+				this->grades[i] = source.grades[i];
+			}
+		}
+	}
+
+	GradeBook operator+(int grade) {
+		//this is a mistake
+		//this->addGrade(grade);
+
+		GradeBook copy = *this;
+		copy.addGrade(grade);
+		return copy;
+	}
+
+	int something() {
+
+	}
 };
 
+
+GradeBook operator+(int grade, GradeBook gradeBook) {
+	return gradeBook + grade;
+
+	//if you don't have the other version
+	//GradeBook copy = gradeBook;
+	//copy.addGrade(grade);
+	//return copy;
+}
+
+
+GradeBook createAGradeBook() {
+	GradeBook newGradeBook("An empty gradebook");
+	return newGradeBook;
+}
+
 int main() {
+
+	GradeBook oopGradeBook("OOP");
+	oopGradeBook.addGrade(10);
+	oopGradeBook.addGrade(10);
+	oopGradeBook.addGrade(9);
+	oopGradeBook.print();
+
+	GradeBook oop2021("OOP for 2021");
+	GradeBook oop2022("OOP for 2022");
+
+	//explicit call of the copy constructor
+	GradeBook oopGradeBookCopy = oopGradeBook;
+
+	//operator =
+	oop2021 = oopGradeBook; //operator=(oop2021, oopGradeBook)
+
+	//oop2021 = (oop2022 = oopGradeBook); //oop2021 = operator=(oop2022, oopGradeBook)
+
+	oop2021 = oopGradeBook;			//oop2021.operator=(oopGradeBook)
+	oop2022 = oopGradeBook;
+
+	oopGradeBook = oopGradeBook;
+
+	//operator =
+	oop2021 = createAGradeBook();
+
+	int vb = 10;		//operator=(int left, int right)
+	vb = vb + 20;		//operator+(int a, int b)
+	//vb = operator+(vb, 20);
+	int vb2 = vb + 20;
+
+	oop2021 = oop2021 + 8;		//oop2021.operator+(8)			//operator+(GradeBook, int)
+	oop2021 = 9 + oop2021;		//operator+(int, GradeBook)
 
 }
