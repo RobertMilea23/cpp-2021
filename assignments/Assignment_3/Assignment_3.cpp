@@ -24,9 +24,18 @@ public:
 		//constructori
 	*/
 
-	FidelityCard();			//sets name to John Doe and cardType to "None" | initializeaza numele cu John Doe si tipul cardului cu "None"
-	FidelityCard(const char* name, string cardName);
-	FidelityCard(const char* name, string cardName, int* existingPoints, int noPoints);
+	FidelityCard()			//sets name to John Doe and cardType to "None" | initializeaza numele cu John Doe si tipul cardului cu "None"
+	{
+
+	}
+
+	FidelityCard(const char* name, string cardName) {
+
+	}
+
+	FidelityCard(const char* name, string cardName, int* existingPoints, int noPoints) {
+
+	}
 
 	//copy constructor
 	//TO DO
