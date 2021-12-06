@@ -109,7 +109,7 @@ public:
 	}
 
 	int& operator[](int index) {
-		if (index < 0 || index > this->noDays) {
+		if (index < 0 || index >= this->noDays) {
 			throw exception("Wrong index");
 		}
 		return this->noItemsPerDay[index];

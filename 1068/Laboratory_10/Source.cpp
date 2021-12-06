@@ -63,7 +63,84 @@ public:
 	}
 
 	//operator =
+	DailySalesData operator=(const DailySalesData& source) {
+
+		//!!!! for operator = that receives source by reference
+		if (this == &source) {
+			//return source;
+			return *this;
+		}
+
+		//this->barCodeNumber = source.barCodeNumber;
+
+		if (this->productDescription == source.productDescription) {
+			return source;
+		}
+
+		delete[] this->productDescription;
+		this->productDescription = new char[strlen(source.productDescription) + 1];
+		strcpy_s(this->productDescription, strlen(source.productDescription) + 1, source.productDescription);
+
+		delete[] this->itemsPerDay;
+		this->itemsPerDay = new int[source.noDays];
+		for (int i = 0; i < source.noDays; i++) {
+			this->itemsPerDay[i] = source.itemsPerDay[i];
+		}
+
+		this->productName = source.productName;
+		this->noDays = source.noDays;
+
+		return source;
+	}
+
+	explicit operator int() {
+		int total = 0;
+		for (int i = 0; i < this->noDays; i++) {
+			total += this->itemsPerDay[i];
+		}
+		return total;
+	}
+
+	int& operator[](int index) {
+		if (index < 0 || index >= this->noDays)
+		{
+			throw exception("Wrong index");
+		}
+		return this->itemsPerDay[index];
+	}
+
+	DailySalesData operator*(int value) {
+		DailySalesData copy = *this;
+
+		for (int i = 0; i < copy.noDays; i++) {
+			copy.itemsPerDay[i] *= value;
+		}
+
+		return copy;
+	}
+
+	int getNoDays() {
+		return this->noDays;
+	}
+
+	friend DailySalesData operator*(int value, DailySalesData object);
+	friend void print(DailySalesData data);
 };
+
+DailySalesData operator*(int value, DailySalesData object) {
+	DailySalesData copy = object;
+
+	for (int i = 0; i < copy.getNoDays(); i++) {
+		copy.itemsPerDay[i] *= value;
+	}
+
+	return copy;
+}
+
+void print(DailySalesData data) {
+	cout << endl << "Product name " << data.productName;
+}
+
 
 //operator +
 //operator *
@@ -72,6 +149,8 @@ public:
 
 int main() {
 	DailySalesData laptopData("Laptop", "Gaming laptop with 8 GB of RAM", 224589);
+	DailySalesData pcData("Desktop PC", "Gaming PC with 8 GB of RAM", 224589);
+	DailySalesData smartphoneData("Smartphone", "S20", 123765);
 
 	DailySalesData* newObject = new DailySalesData("Smartphone", "Some smartphone", 23);
 	delete newObject;
@@ -81,5 +160,27 @@ int main() {
 	DailySalesData laptopCopy = laptopData;
 
 	cout << endl << "The end of the example";
+
+	smartphoneData = laptopData;		//operator=(DailySalesData&, DailySalesData)
+
+	smartphoneData = laptopData = pcData;
+
+	smartphoneData = pcData;
+	laptopData = pcData;
+
+	smartphoneData = smartphoneData;
+
+	//smartphoneData = smartphoneData + 20;
+
+	int totalSoldItems = (int)smartphoneData;
+
+	int firstDaySoldItems = smartphoneData[0];
+
+	smartphoneData[0] = 100;
+
+										//operator*(DailySalesData, int)
+	laptopData = smartphoneData * 2;	//we want to multiply the sold items
+
+	laptopData = 2 * smartphoneData;	//operator*(int, DailySalesData)
 
 }
