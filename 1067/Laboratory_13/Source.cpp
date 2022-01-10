@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -68,6 +69,55 @@ public:
 		this->expirationDate = expirationDate;
 		this->weight = weight;
 	}
+
+
+	//GroceryList loadData(string fileName) {}
+	static void loadData(string fileName, GroceryProduct*& list, int& noProducts) {
+		//1 create the file object
+		ifstream inputFile(fileName, ios::in);
+		if (!inputFile.is_open()) {
+			cout << endl << "************ There is no file there " << fileName;
+		}
+		else {
+			//read the 1st line - number of products
+			inputFile >> noProducts;
+			cout << endl << "No of products " << noProducts;
+
+			//create the array
+			if (list != nullptr) {
+				delete[] list;
+			}
+			list = new GroceryProduct[noProducts];
+
+			for (int i = 0; i < noProducts; i++) {
+				string name;
+				inputFile >> name;
+				float price;
+				inputFile >> price;
+				string expirationDate;
+				inputFile >> expirationDate;
+				float weight;
+				inputFile >> weight;
+				list[i].name = name;
+				list[i].price = price;
+				list[i].expirationDate = expirationDate;
+				list[i].weight = weight;
+			}
+			inputFile.close();
+		}
+	}
+};
+
+class GroceryList {
+public:
+	GroceryProduct* groceriesList;
+	int noProducts;
+
+	//TO DO
+	//overload Copy Constructor
+	//overload =
+	//implement destructor
+	//overload + or += to add new products | define a addProduct()
 };
 
 
@@ -114,5 +164,13 @@ int main() {
 
 	GroceryProduct gp1;
 	gp1.printInfo();
+
+	GroceryProduct* groceriesList = nullptr;
+	int noProducts = 0;
+
+	GroceryProduct::loadData("List.txt", groceriesList, noProducts);
+	for (int i = 0; i < noProducts; i++) {
+		groceriesList[i].printInfo();
+	}
 
 }
