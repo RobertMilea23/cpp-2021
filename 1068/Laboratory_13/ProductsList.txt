@@ -1,0 +1,13 @@
+3
+Apples
+5.2
+March_1_2022
+1000
+Bread
+2.7
+January_15_2022
+500
+Orange_Fresh
+10
+January_13_2022
+250
