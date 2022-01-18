@@ -18,8 +18,20 @@ public:
 		this->price = Price;
 	}
 
-	void printDescription() {
+	virtual void printDescription() {
 		cout << endl << "Product " << this->description << " with a price of " << this->price;
+	}
+
+	float getPrice() {
+		return this->price;
+	}
+};
+
+class ProductWithDiscount : public Product {
+	float discountPercentage;
+
+	float getPrice() {
+		return this->price * (1 - this->discountPercentage / 100);
 	}
 };
 
@@ -35,6 +47,12 @@ public:
 		//this->price = Price;
 		this->minAge = MinAge;
 	}
+
+	//overriding the method inherited from the parent class
+	void printDescription() {
+		cout << endl << "Toy " << this->description << " with a price of " << this->price <<
+			", for kids above " << this->minAge;
+	}
 };
 
 class Monitor : public Product {
@@ -46,6 +64,12 @@ public:
 	}
 	Monitor(string Description, float Price, int Diagonal) 
 		:Product(Description, Price),  diagonal(Diagonal){
+	}
+
+	void printDescription() {
+		//calling the Product version
+		this->Product::printDescription();
+		cout << endl << "It's a monitor with a diagonal of " << this->diagonal;
 	}
 };
 
@@ -60,6 +84,10 @@ public:
 		:Monitor(Description, Price, Diagonal) {
 		this->sensitivity = Sensitivity;
 	}
+	void printDescription() {
+		cout << endl << "It's a touch screen with a sensitivity of " << this->sensitivity;
+	}
+
 };
 
 int main() {
@@ -91,13 +119,21 @@ int main() {
 
 	listOfProducts = new Product * [5];
 
+
 	listOfProducts[0] = &product;
 	listOfProducts[1] = &monitor;
 	listOfProducts[2] = &toy;
 	listOfProducts[3] = &touch;
 	listOfProducts[4] = new Toy("Doll", 75, 10);
 
+	cout << endl << "------------------";
+
 	for (int i = 0; i < 5; i++) {
-		products[i]->printDescription();
+		products[i]->printDescription();		//EARLY-BINDING
+												//LATE - BINDING with virtual methods
 	}
+
+	cout << endl << "------------------";
+	touch.printDescription();
+	toy.printDescription();
 }
